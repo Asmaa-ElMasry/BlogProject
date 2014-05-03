@@ -1,0 +1,46 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @post.title %>
+</p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @post.body %>
+</p>
+
+
+<%if current_user.id == @post.user_id%>
+<%= link_to 'Edit', edit_post_path(@post) %> |
+<%end%>
+<%= link_to 'Back', posts_path %>
+
+<% if @comm.blank? %>
+  <%= render partial: "comments/form", locals: {post: @post} %>
+<%else%>
+  <% @comm.each do |comment_user|%>
+    
+    <% if current_user.id == comment_user.user_id %>
+      <p>You are banned to comment in this post</p>
+    <%else%>
+      <%= render partial: "comments/form", locals: {post: @post} %>
+    <%end%>
+  <%end%>
+<%end%>
+
+<h2>Comments</h2>
+  <% @posts.each do |comment| %>
+    <% if comment.blank? %>
+      <p>There is No comment on this post</p>
+    <%else%>
+      <%= comment.username %> :<%= comment.comment %>
+      
+      <%=comment.report  %> 
+      
+      <%= button_to "report", report_comment_path(comment) , :class => "btn btn-danger"%>
+      <hr />
+      
+    <%end%>
+  <% end %>
+
