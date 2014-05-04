@@ -7,7 +7,8 @@ class CommentsController < ApplicationController
   # GET /comments.json
   def index
     @comments = Comment.where("report < 10")
-    @user_name = @comment.user.name
+    #@user_name = @comment.user.name
+    redirect_to posts_path
   end
   def require_permission
     if current_user != Comment.find(params[:id]).user
@@ -22,6 +23,7 @@ class CommentsController < ApplicationController
   def report
     #@comment.update_attributes(:report => @comment.report+1)
     @comment.report = @comment.report + 1
+    @comment.user_report_id = current_user.id
     respond_to do |format|
       if @comment.save
         format.html { redirect_to post_url(@comment.post), notice: 'Comment was successfully reported.' }
@@ -35,7 +37,8 @@ class CommentsController < ApplicationController
   end
   # GET /comments/new
   def new
-    @comment = Comment.new
+    #@comment = Comment.new
+    redirect_to posts_path
   end
 
   # GET /comments/1/edit

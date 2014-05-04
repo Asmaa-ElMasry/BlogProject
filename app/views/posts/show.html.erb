@@ -31,6 +31,7 @@
 
 <h2>Comments</h2>
   <% @posts.each do |comment| %>
+
     <% if comment.blank? %>
       <p>There is No comment on this post</p>
     <%else%>
@@ -40,7 +41,13 @@
       <%if comment.user_id == current_user.id %>
         <%= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' } %>
       <%else%>
-        <%= button_to "report", report_comment_path(comment) , :class => "btn btn-danger"%>
+
+        <% if comment.user_report_id == current_user.id %>
+          <p>you can only report once</p>
+        <% else %>
+   
+          <%= button_to "report", report_comment_path(comment) , :class => "btn btn-danger"%>
+        <%end%>
       <%end%>
       <hr />
       
