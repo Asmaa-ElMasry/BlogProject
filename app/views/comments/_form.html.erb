@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :comment %><br>
-    <%= f.text_area :comment %>
+    <%= f.text_area :comment ,:style=>"width:300px" %>
   </div>
  
   <div class="field">
@@ -21,6 +21,6 @@
     <%= f.hidden_field :post_id , :value => @post.id %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit :class=>"btn btn-danger" %>
   </div>
 <% end %>

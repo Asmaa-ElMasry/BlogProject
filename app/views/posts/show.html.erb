@@ -35,10 +35,13 @@
       <p>There is No comment on this post</p>
     <%else%>
       <%= comment.username %> :<%= comment.comment %>
-      
-      <%=comment.report  %> 
-      
-      <%= button_to "report", report_comment_path(comment) , :class => "btn btn-danger"%>
+      <br>
+      <p>No of Reports:<%=comment.report  %> </p>
+      <%if comment.user_id == current_user.id %>
+        <%= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' } %>
+      <%else%>
+        <%= button_to "report", report_comment_path(comment) , :class => "btn btn-danger"%>
+      <%end%>
       <hr />
       
     <%end%>

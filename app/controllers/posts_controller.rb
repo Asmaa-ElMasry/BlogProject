@@ -1,12 +1,12 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [ :edit, :update, :destroy]
   before_action :set_post_comm , only: [:show]
-  before_filter :authenticate_user!, :except => [:show, :index]
+  before_filter :authenticate_user!
   before_filter :require_permission, only: [:edit , :update , :destroy ]
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+    @posts = Post.all.page(params[:page]).per_page(2)
 
     #@posts =Kaminari.paginate_array(body).page(params[:page]).per(10)
     #@posts =Post.order(:title).page params[:page]
